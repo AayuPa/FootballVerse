@@ -1,0 +1,14 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+}
+
+.hero-banner {
+    background-image: url("image-76e89a8a-9642-4f5c-8d98-3f1d99b8a73b.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+}
