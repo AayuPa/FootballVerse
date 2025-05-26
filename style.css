@@ -1,0 +1,27 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+}
+
+.hero-banner {
+    /* Original background-image from previous style.css */
+    background-image: url("image-76e89a8a-9642-4f5c-8d98-3f1d99b8a73b.png");
+    background-size: cover;
+    background-position: center;
+    /* New background-color from inline style */
+    background-color: #14b8a6;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+}
+
+/* New styles from inline <style> block */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
