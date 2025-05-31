@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Matches - FootballVerse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: Inter, sans-serif; }
+        .competition-btn {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 2px solid transparent;
+        }
+        .competition-btn:hover {
+            background-color: #e5e7eb;
+        }
+        .competition-btn--active {
+            background-color: var(--comp-color);
+            color: white;
+        }
+        .match-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .match-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .match-card--live {
+            border-left: 4px solid #ef4444;
+        }
+        .match-card--finished {
+            border-left: 4px solid #10b981;
+        }
+        .match-card--upcoming {
+            border-left: 4px solid #3b82f6;
+        }
+        .match-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .match-status--live {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+        .match-status--finished {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+        .match-status--upcoming {
+            background-color: #dbeafe;
+            color: #3b82f6;
+        }
+        .match-group {
+            margin-bottom: 2rem;
+        }
+        .match-group__date {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        .match-group__matches {
+            display: grid;
+            gap: 1rem;
+        }
+        .match-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .team-logo {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #f3f4f6;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .match-score {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .match-time {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .match-venue {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="relative flex size-full min-h-screen flex-col bg-gray-100 overflow-x-hidden">
+        <header class="bg-gray-900 text-white fixed top-0 left-0 right-0 z-50 shadow-md">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img alt="FootballVerse Logo" class="h-8 mr-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDjlZ8MVXoT9b99b9RGJfVONGi-XqJbKAcbK5MaL3DjHq7Pcnw-LsppuEy3PhKqoeoVgwXcngBfM9MLaexla4MVmvy8pYfARYPl0PSBO0NhXEg9EWaqagwTFJSMgE3vwrEBE385VBptoqwJQIwGpYhCeLVncU-hQdsRtFFHrm8IVDdUm9tIabFjlsWTp_2n7nnkqiH4WBixGKnhPG56V7znutKiCGE1D1M3DsOAo8U7lHD3J8zMhjjldHvZBZHngo33ljJG-AQ0uM"/>
+                        <h1 class="text-2xl font-bold">FootballVerse</h1>
+                    </a>
+                </div>
+                <nav class="flex items-center space-x-6">
+                    <a class="hover:text-teal-400 transition duration-300 flex items-center" href="all_matches.html"><span class="material-icons mr-1">sports_soccer</span> Matches</a>
+                    <a class="hover:text-teal-400 transition duration-300 flex items-center" href="Landing_Page_Teams.html"><span class="material-icons mr-1">groups</span> Teams</a>
+                    <a class="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded-lg transition duration-300" href="explore.html">Explore FootballVerse</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="pt-20 px-8 flex flex-1 justify-center py-8">
+            <div class="layout-content-container flex flex-col w-full max-w-7xl gap-8">
+                <!-- Competition Filter Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Competitions</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="competitionList">
+                        <!-- Competition buttons will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Filters Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-700">Match Status</label>
+                            <select id="statusFilter" class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                <option value="all">All Matches</option>
+                                <option value="live">Live</option>
+                                <option value="finished">Finished</option>
+                                <option value="upcoming">Upcoming</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-700">Date Range</label>
+                            <select id="dateFilter" class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                <option value="all">All Dates</option>
+                                <option value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="tomorrow">Tomorrow</option>
+                                <option value="week">This Week</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matches Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Matches</h2>
+                        <div class="text-sm text-gray-500" id="matchesCount">0 matches</div>
+                    </div>
+                    
+                    <div class="space-y-4" id="matchesContainer">
+                        <!-- Matches will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="hidden" id="loadingState">
+                        <div class="flex items-center justify-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
+                            <span class="ml-3 text-gray-600">Loading matches...</span>
+                        </div>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="hidden" id="emptyState">
+                        <div class="text-center py-8">
+                            <span class="material-icons text-6xl text-gray-400 mb-4">sports_soccer</span>
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">No matches found</h3>
+                            <p class="text-gray-500">Try adjusting your filters to see more matches.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
+                <div class="md:col-span-1 flex flex-col items-center md:items-start">
+                    <div class="flex items-center mb-4">
+                        <img alt="FootballVerse Logo" class="h-10 mr-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd2oUM83o6uhaErcPkQjrAD-MGskTh44R5-WQAv6SburlDQYYF3XAZRNA_U1K4XvNJb76bqJMlCEKTMevtSC_Kowwez9g4g4yzxX9cJlpDZEBtXGPOwXLsm_8b3F_YU0s8FmHv23b9Ks-TQAOvUAHzvBHL-C1CdmlwAZFbAsNqGQ7KM77DOKQ6cqqAJXtNlaAMpvzXVXhyce7BxTd2ZaM_ecWRZH1jPgIQS9RExFKwQ8iX_M_6HvkEFhgd16_Jlf64VB867dTi9FU"/>
+                        <span class="text-xl font-semibold text-white">FootballVerse</span>
+                    </div>
+                    <p class="text-sm mb-3 text-center md:text-left">Stay updated with latest FootballVerse News</p>
+                    <form class="flex w-full max-w-sm">
+                        <input class="bg-gray-800 text-white border border-gray-700 rounded-l-md p-2 flex-grow focus:outline-none focus:border-teal-500" placeholder="Enter email" type="email"/>
+                        <button class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-r-md font-semibold transition duration-300" type="submit">Sign Up</button>
+                    </form>
+                </div>
+                <div class="md:col-span-1 text-center md:text-left">
+                    <h5 class="font-semibold text-white mb-3">Quick Links</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a class="hover:text-teal-400 transition duration-300" href="index.html">Home</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="all_matches.html">Matches</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="analytics.html">Analytics</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="forum.html">Forum</a></li>
+                    </ul>
+                </div>
+                <div class="md:col-span-1 text-center md:text-left">
+                    <h5 class="font-semibold text-white mb-3">Resources</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a class="hover:text-teal-400 transition duration-300" href="api-docs.html">API Access</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="support.html">Support Center</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="terms.html">Terms of Service</a></li>
+                        <li><a class="hover:text-teal-400 transition duration-300" href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="md:col-span-1 flex flex-col items-center md:items-end">
+                    <p class="text-sm mb-3">Explore FootballVerse</p>
+                    <div class="flex space-x-4 mb-4">
+                        <a class="text-gray-400 hover:text-teal-400 transition duration-300" href="#"><span class="material-icons">facebook</span></a>
+                        <a class="text-gray-400 hover:text-teal-400 transition duration-300" href="#"><span class="material-icons">flutter_dash</span></a>
+                        <a class="text-gray-400 hover:text-teal-400 transition duration-300" href="#"><span class="material-icons">sports_esports</span></a>
+                        <a class="text-gray-400 hover:text-teal-400 transition duration-300" href="#"><span class="material-icons">send</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+                <p>© 2024 FootballVerse. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button onclick="window.location.href='chat.html'" class="fixed bottom-6 right-6 bg-teal-500 hover:bg-teal-600 text-white p-4 rounded-full shadow-xl focus:outline-none transition duration-300">
+        <span class="material-icons">chat</span>
+    </button>
+
+    <script src="app.js"></script>
+</body>
+</html>

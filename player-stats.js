@@ -322,3 +322,148 @@ function initTabHandling() {
     });
   });
 }
+
+// Event Listeners for Player_Stat.html
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.add('hidden'));
+            
+            // Show selected tab content
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(`${tabId}-content`).classList.remove('hidden');
+        });
+    });
+
+    // Player comparison functionality
+    const compareButton = document.querySelector('button:has(span:contains("Compare"))');
+    const playerSelects = document.querySelectorAll('select.form-input');
+    
+    if (compareButton) {
+        compareButton.addEventListener('click', function() {
+            const selectedPlayers = Array.from(playerSelects).map(select => select.value);
+            if (selectedPlayers.every(player => player)) {
+                window.location.href = `player-comparison.html?players=${selectedPlayers.join(',')}`;
+            } else {
+                alert('Please select players to compare');
+            }
+        });
+    }
+
+    // Search functionality
+    const searchInput = document.querySelector('input[placeholder="Search"]');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            // Here you would typically implement search functionality
+            console.log('Searching for:', searchTerm);
+        });
+    }
+
+    // Notification button
+    const notificationButton = document.querySelector('button:has(div[data-icon="Bell"])');
+    if (notificationButton) {
+        notificationButton.addEventListener('click', function() {
+            // Here you would typically show notifications
+            console.log('Notifications clicked');
+        });
+    }
+
+    // Profile click handler
+    const profileButton = document.querySelector('div[style*="background-image"]');
+    if (profileButton) {
+        profileButton.addEventListener('click', function() {
+            window.location.href = 'profile.html';
+        });
+    }
+
+    // Navigation links
+    const navLinks = document.querySelectorAll('header a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                window.location.href = href;
+            }
+        });
+    });
+
+    // Initialize radar chart
+    function initRadarChart() {
+        const data = {
+            labels: ['Goals', 'Assists', 'Pass Accuracy', 'Tackles', 'Interceptions', 'Dribbles'],
+            datasets: [{
+                label: 'Performance',
+                data: [15, 8, 85, 12, 15, 20],
+                backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                borderColor: 'rgb(20, 184, 166)',
+                pointBackgroundColor: 'rgb(20, 184, 166)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(20, 184, 166)'
+            }]
+        };
+
+        const ctx = document.getElementById('radar-chart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'radar',
+                data: data,
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Initialize form tracker
+    function initFormTracker() {
+        const data = {
+            labels: ['Match 1', 'Match 2', 'Match 3', 'Match 4', 'Match 5'],
+            datasets: [{
+                label: 'Performance Rating',
+                data: [7.5, 8.2, 6.9, 7.8, 8.5],
+                borderColor: 'rgb(20, 184, 166)',
+                tension: 0.1
+            }]
+        };
+
+        const ctx = document.getElementById('form-tracker');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Initialize charts if Chart.js is available
+    if (typeof Chart !== 'undefined') {
+        initRadarChart();
+        initFormTracker();
+    }
+});
